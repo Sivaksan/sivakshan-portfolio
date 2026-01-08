@@ -38,7 +38,6 @@ export default function Contact() {
                                         </a>
                                     </div>
                                 </div>
-
                                 {/* Location */}
                                 <div className="flex items-start gap-4 group">
                                     <div className="p-3 border border-cyber-cyan/30 group-hover:border-cyber-cyan transition-all">
