@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function Contact() {
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -12,22 +12,34 @@ export default function Contact() {
         const form = e.currentTarget;
         const formData = new FormData(form);
 
+        // Add Web3Forms access key
+        formData.append('access_key', '087c85b2-a759-4668-b9bc-9af95dd9ee57');
+
+        console.log('Submitting form...'); // Debug log
+
         try {
             const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 body: formData
             });
 
-            if (response.ok) {
+            const data = await response.json();
+            console.log('Response:', data); // Debug log
+
+            if (data.success) {
                 setStatus('success');
                 form.reset();
-                setTimeout(() => setStatus(''), 3000);
+                alert('✅ Message sent successfully! I will get back to you soon.');
+                setTimeout(() => setStatus('idle'), 5000);
             } else {
+                console.error('Form error:', data);
                 setStatus('error');
+                alert('❌ Something went wrong. Please email me directly at ssivakshan@gmail.com');
             }
         } catch (error) {
-            console.error('Form error:', error);
+            console.error('Network error:', error);
             setStatus('error');
+            alert('❌ Network error. Please email me directly at ssivakshan@gmail.com');
         }
     };
 
@@ -134,12 +146,9 @@ export default function Contact() {
                     {/* Right Column - Contact Form */}
                     <div>
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            <input type="hidden" name="access_key" value="087c85b2-a759-4668-b9bc-9af95dd9ee57" />
-                            <input type="hidden" name="subject" value="New Contact from Portfolio" />
-
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                                    Name
+                                    Name *
                                 </label>
                                 <input
                                     type="text"
@@ -153,7 +162,7 @@ export default function Contact() {
 
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                                    Email
+                                    Email *
                                 </label>
                                 <input
                                     type="email"
@@ -167,7 +176,7 @@ export default function Contact() {
 
                             <div>
                                 <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                                    Message
+                                    Message *
                                 </label>
                                 <textarea
                                     id="message"
@@ -182,17 +191,14 @@ export default function Contact() {
                             <button
                                 type="submit"
                                 disabled={status === 'sending'}
-                                className="w-full group relative inline-flex items-center justify-center overflow-hidden border-2 border-cyber-cyan px-8 py-4 font-mono text-sm font-medium text-cyber-cyan transition-all duration-300 hover:text-cyber-black disabled:opacity-50"
+                                className="w-full group relative inline-flex items-center justify-center overflow-hidden border-2 border-cyber-cyan px-8 py-4 font-mono text-sm font-medium text-cyber-cyan transition-all duration-300 hover:text-cyber-black disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                <span className="absolute inset-0 h-full w-full bg-cyber-cyan transition-all duration-300 ease-out transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
+                                <span className={`absolute inset-0 h-full w-full bg-cyber-cyan transition-all duration-300 ease-out transform origin-left ${status === 'sending' || status === 'success' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
                                 <span className="relative z-10 flex items-center gap-2">
-                                    {status === 'sending' ? (
-                                        'Sending...'
-                                    ) : status === 'success' ? (
-                                        '✓ Message Sent!'
-                                    ) : status === 'error' ? (
-                                        'Error - Try Again'
-                                    ) : (
+                                    {status === 'sending' && '⏳ Sending...'}
+                                    {status === 'success' && '✅ Sent!'}
+                                    {status === 'error' && '❌ Failed - Try Again'}
+                                    {status === 'idle' && (
                                         <>
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -202,12 +208,6 @@ export default function Contact() {
                                     )}
                                 </span>
                             </button>
-
-                            {status === 'success' && (
-                                <p className="text-center text-cyber-cyan text-sm">
-                                    ✓ Thank you! I'll get back to you soon.
-                                </p>
-                            )}
                         </form>
                     </div>
                 </div>
