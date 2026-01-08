@@ -1,0 +1,46 @@
+
+> sivakshan-portfolio@0.1.0 build
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\ASUS\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\ASUS\Desktop\sivakshan-portfolio\package-lock.json
+
+Γû▓ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+Error: Cannot apply unknown utility class `bg-cyber-black`
+    [at onInvalidCandidate (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:21:1511)]
+    [at Te (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:16:36652)]
+    [at C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:21:355]
+    [at Rr (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:3:1718)]
+    [at _ (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:3:1377)]
+    [at $e (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:21:172)]
+    [at un (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:38:294)]
+    [at async cn (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\tailwindcss\dist\lib.js:38:631)]
+    [at async Xr (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\@tailwindcss\node\dist\index.js:10:3417)]
+    [at async I (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\@tailwindcss\postcss\dist\index.js:10:3977)]
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./Desktop/sivakshan-portfolio/app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: tailwindcss: C:\Users\ASUS\Desktop\sivakshan-portfolio\app\globals.css:1:1: Cannot apply unknown utility class `bg-cyber-black`
+    at Input.error (Desktop/sivakshan-portfolio/node_modules/postcss/lib/input.js:135:16) [C:\Users\ASUS\Desktop\sivakshan-portfolio\.next\build\chunks\273d1_0e33ac8a._.js:4651:22]
+    at Root.error (Desktop/sivakshan-portfolio/node_modules/postcss/lib/node.js:146:32) [C:\Users\ASUS\Desktop\sivakshan-portfolio\.next\build\chunks\273d1_0e33ac8a._.js:928:38]
+    [at Object.Once (C:\Users\ASUS\Desktop\sivakshan-portfolio\node_modules\@tailwindcss\postcss\dist\index.js:10:6911)]
+    at async LazyResult.runAsync (Desktop/sivakshan-portfolio/node_modules/postcss/lib/lazy-result.js:293:11) [C:\Users\ASUS\Desktop\sivakshan-portfolio\.next\build\chunks\273d1_0e33ac8a._.js:6206:21]
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [C:\Users\ASUS\Desktop\sivakshan-portfolio\.next\build\chunks\[root-of-the-server]__b94729fb._.js:146:36]
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [C:\Users\ASUS\Desktop\sivakshan-portfolio\.next\build\chunks\[root-of-the-server]__371480aa._.js:443:31]
+
+Import trace:
+  Client Component Browser:
+    ./Desktop/sivakshan-portfolio/app/globals.css [Client Component Browser]
+    ./Desktop/sivakshan-portfolio/app/layout.tsx [Server Component]
+
+
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [C:\Users\ASUS\Desktop\sivakshan-portfolio\.next\build\chunks\[root-of-the-server]__b94729fb._.js:146:36])
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [C:\Users\ASUS\Desktop\sivakshan-portfolio\.next\build\chunks\[root-of-the-server]__371480aa._.js:443:31])
