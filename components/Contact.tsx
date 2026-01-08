@@ -38,6 +38,7 @@ export default function Contact() {
                                         </a>
                                     </div>
                                 </div>
+
                                 {/* Location */}
                                 <div className="flex items-start gap-4 group">
                                     <div className="p-3 border border-cyber-cyan/30 group-hover:border-cyber-cyan transition-all">
@@ -105,7 +106,6 @@ export default function Contact() {
                         <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
                             <input type="hidden" name="access_key" value="087c85b2-a759-4668-b9bc-9af95dd9ee57" />
                             <input type="hidden" name="subject" value="New Contact from Portfolio" />
-                            <input type="hidden" name="redirect" value="https://sivakshan-portfolio.vercel.app/#contact" />
 
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
