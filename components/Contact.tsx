@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ export default function Contact() {
     });
     const [status, setStatus] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         setStatus('sending');
 
@@ -22,7 +22,7 @@ export default function Contact() {
         }, 1000);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
@@ -132,7 +132,6 @@ export default function Contact() {
                     {/* Right Column - Contact Form */}
                     <div>
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Name */}
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                                     Name
@@ -149,7 +148,6 @@ export default function Contact() {
                                 />
                             </div>
 
-                            {/* Email */}
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                                     Email
@@ -166,7 +164,6 @@ export default function Contact() {
                                 />
                             </div>
 
-                            {/* Message */}
                             <div>
                                 <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                                     Message
@@ -183,18 +180,30 @@ export default function Contact() {
                                 />
                             </div>
 
-                            {/* Submit Button */}
                             <button
                                 type="submit"
                                 disabled={status === 'sending'}
-                                className="w-full bg-transparent border-2 border-cyber-cyan text-cyber-cyan px-6 py-3 font-mono hover:bg-cyber-cyan hover:text-cyber-black transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full group relative inline-flex items-center justify-center overflow-hidden border-2 border-cyber-cyan px-8 py-4 font-mono text-sm font-medium text-cyber-cyan transition-all duration-300 hover:text-cyber-black disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {status === 'sending' ? 'Sending...' : status === 'success' ? 'Message Sent!' : 'Send Message'}
+                                <span className={`absolute inset-0 h-full w-full bg-cyber-cyan transition-all duration-300 ease-out transform ${status === 'sending' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'} origin-left`}></span>
+                                <span className="relative z-10 flex items-center gap-2">
+                                    {status === 'sending' ? (
+                                        <span>Sending...</span>
+                                    ) : status === 'success' ? (
+                                        <span>Message Sent!</span>
+                                    ) : (
+                                        <>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                            </svg>
+                                            <span>Send Message</span>
+                                        </>
+                                    )}
+                                </span>
                             </button>
 
-                            {/* Status Message */}
                             {status === 'success' && (
-                                <p className="text-center text-cyber-cyan text-sm">
+                                <p className="text-center text-cyber-cyan text-sm animate-pulse">
                                     ✓ Message sent successfully! I'll get back to you soon.
                                 </p>
                             )}
