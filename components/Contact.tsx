@@ -1,6 +1,36 @@
 'use client';
 
+import { useState } from 'react';
+
 export default function Contact() {
+    const [status, setStatus] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus('sending');
+
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                form.reset();
+                setTimeout(() => setStatus(''), 3000);
+            } else {
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error('Form error:', error);
+            setStatus('error');
+        }
+    };
+
     return (
         <section id="contact" className="relative min-h-screen py-20 px-4 bg-cyber-black">
             <div className="max-w-4xl mx-auto">
@@ -103,7 +133,7 @@ export default function Contact() {
 
                     {/* Right Column - Contact Form */}
                     <div>
-                        <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <input type="hidden" name="access_key" value="087c85b2-a759-4668-b9bc-9af95dd9ee57" />
                             <input type="hidden" name="subject" value="New Contact from Portfolio" />
 
@@ -151,16 +181,33 @@ export default function Contact() {
 
                             <button
                                 type="submit"
-                                className="w-full group relative inline-flex items-center justify-center overflow-hidden border-2 border-cyber-cyan px-8 py-4 font-mono text-sm font-medium text-cyber-cyan transition-all duration-300 hover:text-cyber-black"
+                                disabled={status === 'sending'}
+                                className="w-full group relative inline-flex items-center justify-center overflow-hidden border-2 border-cyber-cyan px-8 py-4 font-mono text-sm font-medium text-cyber-cyan transition-all duration-300 hover:text-cyber-black disabled:opacity-50"
                             >
                                 <span className="absolute inset-0 h-full w-full bg-cyber-cyan transition-all duration-300 ease-out transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
                                 <span className="relative z-10 flex items-center gap-2">
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                    </svg>
-                                    Send Message
+                                    {status === 'sending' ? (
+                                        'Sending...'
+                                    ) : status === 'success' ? (
+                                        '✓ Message Sent!'
+                                    ) : status === 'error' ? (
+                                        'Error - Try Again'
+                                    ) : (
+                                        <>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                            </svg>
+                                            Send Message
+                                        </>
+                                    )}
                                 </span>
                             </button>
+
+                            {status === 'success' && (
+                                <p className="text-center text-cyber-cyan text-sm">
+                                    ✓ Thank you! I'll get back to you soon.
+                                </p>
+                            )}
                         </form>
                     </div>
                 </div>
