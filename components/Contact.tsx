@@ -12,7 +12,7 @@ export default function Contact() {
 
                 <p className="text-gray-300 text-xl mb-12 leading-relaxed">
                     I'm currently open to PhD opportunities, research collaborations,<br />
-                    and exciting AI/Robotics projects.
+                    and exciting Full stack Mobile, Web applications and AI/Robotics projects.
                 </p>
 
                 <div className="space-y-6 mb-12">
