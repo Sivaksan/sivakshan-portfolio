@@ -1,34 +1,6 @@
 'use client';
 
-import { useState, ChangeEvent, FormEvent } from 'react';
-
 export default function Contact() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: '',
-    });
-    const [status, setStatus] = useState('');
-
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        setStatus('sending');
-
-        // Simulate form submission (replace with actual API later)
-        setTimeout(() => {
-            setStatus('success');
-            setFormData({ name: '', email: '', message: '' });
-            setTimeout(() => setStatus(''), 3000);
-        }, 1000);
-    };
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
     return (
         <section id="contact" className="relative min-h-screen py-20 px-4 bg-cyber-black">
             <div className="max-w-4xl mx-auto">
@@ -131,7 +103,11 @@ export default function Contact() {
 
                     {/* Right Column - Contact Form */}
                     <div>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+                            <input type="hidden" name="access_key" value="087c85b2-a759-4668-b9bc-9af95dd9ee57" />
+                            <input type="hidden" name="subject" value="New Contact from Portfolio" />
+                            <input type="hidden" name="redirect" value="https://sivakshan-portfolio.vercel.app/#contact" />
+
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                                     Name
@@ -140,11 +116,9 @@ export default function Contact() {
                                     type="text"
                                     id="name"
                                     name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-cyber-dark border border-cyber-cyan/30 text-white focus:border-cyber-cyan focus:outline-none transition-all"
-                                    placeholder="Your Name"
+                                    className="w-full px-4 py-3 bg-cyber-dark border border-gray-700 text-white focus:border-cyber-cyan focus:outline-none transition-colors"
+                                    placeholder="Your name"
                                 />
                             </div>
 
@@ -156,10 +130,8 @@ export default function Contact() {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-cyber-dark border border-cyber-cyan/30 text-white focus:border-cyber-cyan focus:outline-none transition-all"
+                                    className="w-full px-4 py-3 bg-cyber-dark border border-gray-700 text-white focus:border-cyber-cyan focus:outline-none transition-colors"
                                     placeholder="your.email@example.com"
                                 />
                             </div>
@@ -171,42 +143,25 @@ export default function Contact() {
                                 <textarea
                                     id="message"
                                     name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
                                     rows={6}
-                                    className="w-full px-4 py-3 bg-cyber-dark border border-cyber-cyan/30 text-white focus:border-cyber-cyan focus:outline-none transition-all resize-none"
-                                    placeholder="Your message here..."
+                                    required
+                                    className="w-full px-4 py-3 bg-cyber-dark border border-gray-700 text-white focus:border-cyber-cyan focus:outline-none transition-colors resize-none"
+                                    placeholder="Your message..."
                                 />
                             </div>
 
                             <button
                                 type="submit"
-                                disabled={status === 'sending'}
-                                className="w-full group relative inline-flex items-center justify-center overflow-hidden border-2 border-cyber-cyan px-8 py-4 font-mono text-sm font-medium text-cyber-cyan transition-all duration-300 hover:text-cyber-black disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full group relative inline-flex items-center justify-center overflow-hidden border-2 border-cyber-cyan px-8 py-4 font-mono text-sm font-medium text-cyber-cyan transition-all duration-300 hover:text-cyber-black"
                             >
-                                <span className={`absolute inset-0 h-full w-full bg-cyber-cyan transition-all duration-300 ease-out transform ${status === 'sending' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'} origin-left`}></span>
+                                <span className="absolute inset-0 h-full w-full bg-cyber-cyan transition-all duration-300 ease-out transform scale-x-0 group-hover:scale-x-100 origin-left"></span>
                                 <span className="relative z-10 flex items-center gap-2">
-                                    {status === 'sending' ? (
-                                        <span>Sending...</span>
-                                    ) : status === 'success' ? (
-                                        <span>Message Sent!</span>
-                                    ) : (
-                                        <>
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                            </svg>
-                                            <span>Send Message</span>
-                                        </>
-                                    )}
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                    </svg>
+                                    Send Message
                                 </span>
                             </button>
-
-                            {status === 'success' && (
-                                <p className="text-center text-cyber-cyan text-sm animate-pulse">
-                                    ✓ Message sent successfully! I'll get back to you soon.
-                                </p>
-                            )}
                         </form>
                     </div>
                 </div>
